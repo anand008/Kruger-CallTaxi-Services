@@ -1,0 +1,499 @@
+####################################################################################################################################################################################################
+ENDPOINTS
+####################################################################################################################################################################################################
+POST  /customers/${id}/rides?color=pink&size=mini helps request for a taxi and provide customer preferences on kind of taxi
+
+GET   /customers/${id}/rides                      helps obtain all the rides made by a customer
+
+GET   /customers/${id}/rides/${id}                helps obtain specific ride made by a customer
+
+POST  /customers/${id}/rides/${id}                helps customer provide a ride confirmation
+
+PATCH /drivers/${id}/rides/${id}                  helps driver mark ride completion and obtain ride fare to be received from customer
+
+PUT   /drivers/${id}/rides/${id}                  helps driver mark fare receipt from the customer upon ride completion
+
+GET   /drivers/${id}/rides                        helps obtain all the rides completed by a driver
+
+GET   /drivers/${id}/rides/${id}                  helps obtain specific ride completed by a driver
+
+GET   /taxis?available=true&color=pink&size=mini  helps retrieve info of all the available taxis working for Kruger call taxi services filtered based on availability and customer preferences
+
+GET   /taxis/${id}                                helps retrieve info of a specific taxi working for Kruger call taxi services
+####################################################################################################################################################################################################
+HEADERS
+####################################################################################################################################################################################################
+ride-negotiation-id                              would greatly help in checking logs when certain issue occurred during a ride negotiation between customer and Kruger call taxi services
+content-type                                     helps in content negotiation
+version                                          supports backward compatibility
+####################################################################################################################################################################################################
+CUSTOMER REQUESTING FOR A RIDE -> POST  /customers/8494848586/rides?color=pink&size=mini helps request for a taxi and provide customer preferences on kind of taxi
+####################################################################################################################################################################################################
+REQUEST
+
+HEADERS
+ride-negotiation-id=54ca60a5-d34a-4cf9-8cf5-7161e17d789b
+content-type=application/json
+version=1.0
+
+BODY
+{
+   "source-coordinates":{
+      "latitude":"44.968046",
+      "longitude":"-94.420307"
+   },
+   "destination-coordinates":{
+      "latitude":"33.844847",
+      "longitude":"-116.549069"
+   }
+}
+####################################################################################################################################################################################################
+SUCCESSFUL RESPONSE WITH 200
+
+HEADERS
+currency=INR
+ride-negotiation-id=54ca60a5-d34a-4cf9-8cf5-7161e17d789b
+content-type=application/json
+
+BODY
+{
+   "taxi-details":{
+      "taxi-id":"KA.51.MD.4173"
+   },
+   "fare-details":{
+      "expected-fare":"500"
+   },
+   "href":"https://kruger.taxiservices.in/customers/8494848586/rides/54ca60a5-d34a-4cf9-8cf5-7161e17d789b"
+}
+
+DURING HEADER VALIDATION ISSUES
+return an error response stating which headers were not as expected with a status code of 412.
+
+DURING INVALID INPUT
+return 400 bad request
+
+DURING EXCEPTION SCENARIOS
+return an error response stating that internal server error encountered with a status code of 500.
+####################################################################################################################################################################################################
+CUSTOMER REQUESTING ALL OF HIS/HER RIDE DETAILS -> GET   /customers/8494848586/rides       helps obtain all the rides made by a customer
+####################################################################################################################################################################################################
+REQUEST
+
+HEADERS
+content-type=application/json
+version=1.0
+####################################################################################################################################################################################################
+SUCCESSFUL RESPONSE WITH 200
+
+HEADERS
+currency=INR
+duration-time-unit=seconds
+distance-unit=miles
+content-type=application/json
+
+BODY
+{
+   "customer-id":"8494848586",
+   "rides":[
+      {
+         "id":"54ca60a5-d34a-4cf9-8cf5-7161e17d789b",
+         "source-coordinates":{
+            "latitude":"44.968046",
+            "longitude":"-94.420307"
+         },
+         "destination-coordinates":{
+            "latitude":"33.844847",
+            "longitude":"-116.549069"
+         },
+         "taxi-id":"KA.51.MD.4173",
+         "driver-id":"9663805588",
+         "distance-travelled":"9.5",
+         "fare-amount":"450",
+         "duration":"5500"
+      },
+      {
+         "id":"78jh3b75-d34a-4cf9-8cf5-7161e17d789b",
+         "source-coordinates":{
+            "latitude":"77.968046",
+            "longitude":"-78.420307"
+         },
+         "destination-coordinates":{
+            "latitude":"89.844847",
+            "longitude":"-123.549069"
+         },
+         "taxi-id":"KA.34.MN.7690",
+         "driver-id":"9059933556",
+         "distance-travelled":"9.5",
+         "fare-amount":"700",
+         "duration":"6634"
+      }
+   ]
+}
+
+DURING HEADER VALIDATION ISSUES
+return an error response stating which headers were not as expected with a status code of 412.
+
+DURING EXCEPTION SCENARIOS
+return an error response stating that internal server error encountered with a status code of 500.
+####################################################################################################################################################################################################
+CUSTOMER REQUESTING SPECIFIC RIDE DETAILS -> GET   /customers/8494848586/rides/54ca60a5-d34a-4cf9-8cf5-7161e17d789b      helps obtain specific ride made by a customer
+########################################################################################################################################################################################################################################################################################################################################################################################################
+REQUEST
+
+HEADERS
+content-type=application/json
+version=1.0
+########################################################################################################################################################################################################################################################################################################################################################################################################
+SUCCESSFUL RESPONSE WITH 200
+
+HEADERS
+currency=INR
+duration-time-unit=seconds
+distance-unit=miles
+content-type=application/json
+
+BODY
+{
+   "customer-id":"8494848586",
+   "rides":[
+      {
+         "id":"54ca60a5-d34a-4cf9-8cf5-7161e17d789b",
+         "source-coordinates":{
+            "latitude":"44.968046",
+            "longitude":"-94.420307"
+         },
+         "destination-coordinates":{
+            "latitude":"33.844847",
+            "longitude":"-116.549069"
+         },
+         "taxi-id":"KA.51.MD.4173",
+         "driver-id":"9663805588",
+         "distance-travelled":"9.5",
+         "fare-amount":"450",
+         "duration":"5500"
+      }
+   ]
+}
+
+DURING HEADER VALIDATION ISSUES
+return an error response stating which headers were not as expected with a status code of 412.
+
+DURING EXCEPTION SCENARIOS
+return an error response stating that internal server error encountered with a status code of 500.
+####################################################################################################################################################################################################
+CUSTOMER RIDE CONFIRMATION -> POST  /customers/8494848586/rides/54ca60a5-d34a-4cf9-8cf5-7161e17d789b       helps customer provide a ride confirmation
+####################################################################################################################################################################################################
+REQUEST
+
+HEADERS
+ride-negotiation-id=54ca60a5-d34a-4cf9-8cf5-7161e17d789b
+content-type=application/json
+version=1.0
+
+BODY
+{
+   "taxi-details":{
+      "taxi-id":"KA.51.MD.4173"
+   }
+}
+####################################################################################################################################################################################################
+SUCCESSFUL RESPONSE WITH 200
+
+HEADERS
+ride-negotiation-id=54ca60a5-d34a-4cf9-8cf5-7161e17d789b
+content-type=application/json
+
+BODY
+{
+   "taxi-details":{
+      "taxi-id":"KA.51.MD.4173"
+   },
+   "driver-details":{
+      "driver-name":"Manikyam Basha",
+      "driver-contact-number":"9663805588",
+      "driver-rating":"5.0"
+   },
+   "ride-details":{
+      "otp":"345827"
+   }
+}
+
+DURING HEADER VALIDATION ISSUES
+return an error response stating which headers were not as expected with a status code of 412.
+
+DURING INVALID INPUT
+return 400 bad request
+
+DURING EXCEPTION SCENARIOS
+return an error response stating that internal server error encountered with a status code of 500.
+####################################################################################################################################################################################################
+RIDE COMPLETION -> PATCH /drivers/8494848586/rides/54ca60a5-d34a-4cf9-8cf5-7161e17d789b       helps driver mark ride completion and obtain ride fare to be received from customer
+####################################################################################################################################################################################################
+REQUEST
+
+HEADERS
+ride-negotiation-id=54ca60a5-d34a-4cf9-8cf5-7161e17d789b
+content-type=application/json
+version=1.0
+duration-unit=seconds
+distance-unit=miles
+
+BODY
+{
+   "taxi-id":"KA.51.MD.4173",
+   "customer-id":"8494848586",
+   "ride-completion":"true",
+   "distance-travelled":"7.9",
+   "duration":"3698"
+}
+####################################################################################################################################################################################################
+SUCCESSFUL RESPONSE WITH 200
+
+HEADERS
+ride-negotiation-id=54ca60a5-d34a-4cf9-8cf5-7161e17d789b
+content-type=application/json
+
+BODY
+{
+   "fare":"650",
+   "href":"https://kruger.taxiservices.in/drivers/8494848586/rides/54ca60a5-d34a-4cf9-8cf5-7161e17d789b"
+}
+
+DURING HEADER VALIDATION ISSUES
+return an error response stating which headers were not as expected with a status code of 412.
+
+DURING INVALID INPUT
+return 400 bad request
+
+DURING EXCEPTION SCENARIOS
+return an error response stating that internal server error encountered with a status code of 500.
+####################################################################################################################################################################################################
+MONEY RECEIPT -> PUT   /drivers/${id}/rides/${id}  helps driver mark fare receipt from the customer upon ride completion
+####################################################################################################################################################################################################
+REQUEST
+
+HEADERS
+ride-negotiation-id=54ca60a5-d34a-4cf9-8cf5-7161e17d789b
+content-type=application/json
+version=1.0
+
+BODY
+{
+   "customer-id":"8494848586",
+   "payment-status":"paid",
+   "taxi-id":"KA.51.MD.4173",
+   "current-location-coordinates":{
+      "latitude":"78.968046",
+      "longitude":"-36.420307"
+   }
+}
+####################################################################################################################################################################################################
+SUCCESSFUL RESPONSE WITH 204
+
+HEADERS
+ride-negotiation-id=54ca60a5-d34a-4cf9-8cf5-7161e17d789b
+content-type=application/json
+version=1.0
+
+BODY
+No Content
+
+DURING HEADER VALIDATION ISSUES
+return an error response stating which headers were not as expected with a status code of 412.
+
+DURING INVALID INPUT
+return 400 bad request
+
+DURING EXCEPTION SCENARIOS
+return an error response stating that internal server error encountered with a status code of 500.
+####################################################################################################################################################################################################
+DRIVER REQUESTING ALL OF HIS/HER RIDE DETIALS -> GET   /drivers/9663805588/rides     helps obtain all the rides made by a customer
+####################################################################################################################################################################################################
+REQUEST
+
+HEADERS
+content-type=application/json
+version=1.0
+####################################################################################################################################################################################################
+SUCCESSFUL RESPONSE WITH 200
+
+HEADERS
+currency=INR
+duration-time-unit=seconds
+distance-unit=miles
+content-type=application/json
+
+BODY
+{
+   "driver-id":"9663805588",
+   "rides":[
+      {
+         "id":"54ca60a5-d34a-4cf9-8cf5-7161e17d789b",
+         "source-coordinates":{
+            "latitude":"44.968046",
+            "longitude":"-94.420307"
+         },
+         "destination-coordinates":{
+            "latitude":"33.844847",
+            "longitude":"-116.549069"
+         },
+         "distance-travelled":"9.5",
+         "fare-amount":"450",
+         "duration":"5500"
+      },
+      {
+         "id":"78jh3b75-d34a-4cf9-8cf5-7161e17d789b",
+         "source-coordinates":{
+            "latitude":"77.968046",
+            "longitude":"-78.420307"
+         },
+         "destination-coordinates":{
+            "latitude":"89.844847",
+            "longitude":"-123.549069"
+         },
+         "distance-travelled":"9.5",
+         "fare-amount":"700",
+         "duration":"6634"
+      }
+   ]
+}
+
+DURING HEADER VALIDATION ISSUES
+return an error response stating which headers were not as expected with a status code of 412.
+
+DURING EXCEPTION SCENARIOS
+return an error response stating that internal server error encountered with a status code of 500.
+####################################################################################################################################################################################################
+CUSTOMER REQUESTING SPECIFIC RIDE DETAILS -> GET   /drivers/9663805588/rides/54ca60a5-d34a-4cf9-8cf5-7161e17d789b    helps obtain specific ride made by a customer
+########################################################################################################################################################################################################################################################################################################################################################################################################
+REQUEST
+
+HEADERS
+content-type=application/json
+version=1.0
+########################################################################################################################################################################################################################################################################################################################################################################################################
+SUCCESSFUL RESPONSE WITH 200
+
+HEADERS
+currency=INR
+duration-time-unit=seconds
+distance-unit=miles
+content-type=application/json
+
+BODY
+{
+   "driver-id":"9663805588",
+   "rides":[
+      {
+         "id":"54ca60a5-d34a-4cf9-8cf5-7161e17d789b",
+         "source-coordinates":{
+            "latitude":"44.968046",
+            "longitude":"-94.420307"
+         },
+         "destination-coordinates":{
+            "latitude":"33.844847",
+            "longitude":"-116.549069"
+         },
+         "distance-travelled":"9.5",
+         "fare-amount":"450",
+         "duration":"5500"
+      }
+   ]
+}
+
+
+DURING HEADER VALIDATION ISSUES
+return an error response stating which headers were not as expected with a status code of 412.
+
+DURING EXCEPTION SCENARIOS
+return an error response stating that internal server error encountered with a status code of 500.
+########################################################################################################################################################################################################################################################################################################################################################################################################
+RETRIEVING TAXIS BASED ON AVAILABILITY AND CUSTOMER PREFERENCES -> GET   /taxis?available=true&color=pink&size=mini  helps retrieve info of all the available taxis working for Kruger call taxi services filtered based on availability and customer preferences
+########################################################################################################################################################################################################################################################################################################################################################################################################
+REQUEST
+
+HEADERS
+ride-negotiation-id=54ca60a5-d34a-4cf9-8cf5-7161e17d789b
+content-type=application/json
+version=1.0
+########################################################################################################################################################################################################################################################################################################################################################################################################
+SUCCESSFUL RESPONSE WITH 200
+
+HEADERS
+ride-negotiation-id=54ca60a5-d34a-4cf9-8cf5-7161e17d789b
+content-type=application/json
+
+BODY
+[
+   {
+      "taxidetails":{
+         "taxi-id":"KA.51.MD.4173",
+         "taxi-color":"pink",
+         "taxi-type":"mini",
+         "car-model":"Maruthi Suzuki Swift"
+      },
+      "driver-details":{
+         "driver-name":"Manikyam Basha",
+         "driver-contact-number":"9663805588",
+         "driver-rating":"5.0"
+      }
+   },
+   {
+      "taxidetails":{
+         "taxi-id":"KA.23.HL.2345",
+         "taxi-color":"pink",
+         "taxi-type":"prime",
+         "car-model":"Mahindra Verito"
+      },
+      "driver-details":{
+         "driver-name":"Vamsee Munagala",
+         "driver-contact-number":"9059933556",
+         "driver-rating":"3.0"
+      }
+   }
+]
+
+DURING HEADER VALIDATION ISSUES
+return an error response stating which headers were not as expected with a status code of 412.
+
+DURING EXCEPTION SCENARIOS
+return an error response stating that internal server error encountered with a status code of 500.
+########################################################################################################################################################################################################################################################################################################################################################################################################
+RETRIEVING TAXI DETAILS USING TAXI ID -> GET   /taxis/KA.51.MD.4173                                helps retrieve info of a specific taxi working for Kruger call taxi services
+########################################################################################################################################################################################################################################################################################################################################################################################################
+REQUEST
+
+HEADERS
+ride-negotiation-id=54ca60a5-d34a-4cf9-8cf5-7161e17d789b
+content-type=application/json
+version=1.0
+########################################################################################################################################################################################################################################################################################################################################################################################################
+SUCCESSFUL RESPONSE WITH 200
+
+HEADERS
+ride-negotiation-id=54ca60a5-d34a-4cf9-8cf5-7161e17d789b
+content-type=application/json
+
+BODY
+[
+   {
+      "taxidetails":{
+         "taxi-id":"KA.51.MD.4173",
+         "taxi-color":"pink",
+         "taxi-type":"mini",
+         "car-model":"Maruthi Suzuki Swift"
+      },
+      "driver-details":{
+         "driver-name":"Manikyam Basha",
+         "driver-contact-number":"9663805588",
+         "driver-rating":"5.0"
+      }
+   }
+]
+
+DURING HEADER VALIDATION ISSUES
+return an error response stating which headers were not as expected with a status code of 412.
+
+DURING EXCEPTION SCENARIOS
+return an error response stating that internal server error encountered with a status code of 500.
+########################################################################################################################################################################################################################################################################################################################################################################################################
