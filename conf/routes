@@ -1,0 +1,20 @@
+# Routes
+POST  /customers/:customer_id/rides                        org.kruger.calltaxi.services.controllers.BookingController.bookTaxi(customer_id:String,taxi_color:String?="not provided",taxi_type:String?="not provided")
+
+POST  /customers/:customer_id/rides/:ride_id               org.kruger.calltaxi.services.controllers.BookingController.confirmBooking(customer_id:String,ride_id:String)
+
+PATCH /drivers/:driver_id/rides/:ride_id                   org.kruger.calltaxi.services.controllers.BookingController.completeRide(driver_id:String,ride_id:String)
+
+PUT   /drivers/:driver_id/rides/:ride_id                   org.kruger.calltaxi.services.controllers.BookingController.updateRidePaymentDetails(driver_id:String,ride_id:String)
+
+GET   /taxis                                               org.kruger.calltaxi.services.controllers.TaxiManagementController.fetchTaxis(available:Boolean?=true,taxi_color:String?="not provided",taxi_type:String?="not provided")
+
+GET   /taxis/:taxi_id                                      org.kruger.calltaxi.services.controllers.TaxiManagementController.fetchTaxiById(taxi_id:String)
+
+GET   /customers/:customer_id/rides                        org.kruger.calltaxi.services.controllers.CustomerRideHistoryController.fetchRides(customer_id:String)
+
+GET   /customers/:customer_id/rides/:ride_id               org.kruger.calltaxi.services.controllers.CustomerRideHistoryController.fetchRideById(customer_id:String,ride_id:String)
+
+GET   /drivers/:driver_id/rides                            org.kruger.calltaxi.services.controllers.DriverRideHistoryController.fetchRides(driver_id:String)
+
+GET   /drivers/:driver_id/rides/:ride_id                   org.kruger.calltaxi.services.controllers.DriverRideHistoryController.fetchRideById(driver_id:String,ride_id:String)
