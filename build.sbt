@@ -1,4 +1,4 @@
-name := """abc"""
+name := """Kruger Call Taxi Service"""
 organization := "org.kruger.calltaxi.controllers"
 
 version := "1.0-SNAPSHOT"
