@@ -1,7 +1,7 @@
 ####################################################################################################################################################################################################
 ENDPOINTS
 ####################################################################################################################################################################################################
-POST  /customers/${id}/rides?color=pink&size=mini helps request for a taxi and provide customer preferences on kind of taxi
+POST  /customers/${id}/rides?color=pink&type=mini helps request for a taxi and provide customer preferences on kind of taxi
 
 GET   /customers/${id}/rides                      helps obtain all the rides made by a customer
 
@@ -17,7 +17,7 @@ GET   /drivers/${id}/rides                        helps obtain all the rides com
 
 GET   /drivers/${id}/rides/${id}                  helps obtain specific ride completed by a driver
 
-GET   /taxis?available=true&color=pink&size=mini  helps retrieve info of all the available taxis working for Kruger call taxi services filtered based on availability and customer preferences
+GET   /taxis?available=true&color=pink&type=mini  helps retrieve info of all the available taxis working for Kruger call taxi services filtered based on availability and customer preferences
 
 GET   /taxis/${id}                                helps retrieve info of a specific taxi working for Kruger call taxi services
 ####################################################################################################################################################################################################
@@ -27,7 +27,7 @@ ride-negotiation-id                              would greatly help in checking 
 content-type                                     helps in content negotiation
 version                                          supports backward compatibility
 ####################################################################################################################################################################################################
-CUSTOMER REQUESTING FOR A RIDE -> POST  /customers/8494848586/rides?color=pink&size=mini helps request for a taxi and provide customer preferences on kind of taxi
+CUSTOMER REQUESTING FOR A RIDE -> POST  /customers/8494848586/rides?color=pink&type=mini helps request for a taxi and provide customer preferences on kind of taxi
 ####################################################################################################################################################################################################
 REQUEST
 
@@ -268,7 +268,7 @@ return 400 bad request
 DURING EXCEPTION SCENARIOS
 return an error response stating that internal server error encountered with a status code of 500.
 ####################################################################################################################################################################################################
-MONEY RECEIPT -> PUT   /drivers/${id}/rides/${id}  helps driver mark fare receipt from the customer upon ride completion
+MONEY RECEIPT -> PUT   /drivers/8494848586/rides/54ca60a5-d34a-4cf9-8cf5-7161e17d789b  helps driver mark fare receipt from the customer upon ride completion
 ####################################################################################################################################################################################################
 REQUEST
 
@@ -408,7 +408,7 @@ return an error response stating which headers were not as expected with a statu
 DURING EXCEPTION SCENARIOS
 return an error response stating that internal server error encountered with a status code of 500.
 ########################################################################################################################################################################################################################################################################################################################################################################################################
-RETRIEVING TAXIS BASED ON AVAILABILITY AND CUSTOMER PREFERENCES -> GET   /taxis?available=true&color=pink&size=mini  helps retrieve info of all the available taxis working for Kruger call taxi services filtered based on availability and customer preferences
+RETRIEVING TAXIS BASED ON AVAILABILITY AND CUSTOMER PREFERENCES -> GET   /taxis?available=true&color=pink&type=mini  helps retrieve info of all the available taxis working for Kruger call taxi services filtered based on availability and customer preferences
 ########################################################################################################################################################################################################################################################################################################################################################################################################
 REQUEST
 
