@@ -61,6 +61,6 @@ public class BookingController extends Controller {
 	 * @return CompletionStage<Result>
 	 */
 	public CompletionStage<Result> updateRidePaymentDetails(String driverId, String rideId) {
-		return CompletableFuture.supplyAsync(Results::ok);
+		return CompletableFuture.supplyAsync(Results::noContent);
 	}
 }
