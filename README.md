@@ -16,3 +16,15 @@ consolidates Microservices to handle taxi services
    eclipse and then deploys it locally on 9000 port.
    
 5. execute "sbt jacoco" at project folder to get a test case execution report.
+
+6. how to book a cab ?
+   a. user requests for a cab by providing his preferences.
+      POST  /customers/${id}/rides?color=pink&type=mini
+   b. service internally fetches taxis based on availability, customer preferences and returns the nearest taxi information.
+      GET   /taxis?available=true&color=pink&type=mini 
+   c. customer uses the taxi information provided to him/her and confirms the ride.
+      POST  /customers/${id}/rides/${id}                
+   d. once customer is dropped at destination, driver initiates a ride completion request to retrieve taxi fare.
+      PATCH /drivers/${id}/rides/${id}                  
+   e. bill payment status is updated by the driver. if a customer did not pay, its defaults to kruger postpaid services.
+      PUT   /drivers/${id}/rides/${id}                  
